@@ -8,3 +8,19 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+
+.colorFondo{
+    background-color: rgb(88, 121, 143);
+       
+}
+.nombreDisp{
+    font-size: 25px;
+    color: rgb(70, 22, 22);
+}
+
+
+.modal {
+    max-width: 40%;
+    max-height: 90%;
+}

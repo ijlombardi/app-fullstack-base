@@ -4,16 +4,25 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="static/css/styles.css"  media="screen,projection"/>
+      <script src="static/js/material-dialog.js" type="text/javascript"></script>
+      <script src="static/js/materialize.min.js" type="text/javascript"></script>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, "");
+      });
+        </script>
+      <script src="static/js/nouislider.js" type="text/javascript"></script>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <main>
             <!-- Navigation bar -->
-            <nav style="background-color:#124580">
+            <nav class="colorFondo" >
                 <div class="nav-wrapper">
                     <a href="#!" class="brand-logo left" style="margin-left: 15px;">Smart Home</a>
                     <ul id="nav-mobile" class="right" style="margin-right: 15px;">
-                        <li><a href="#">Help</a></li>
+                        <li><a href="https://youtu.be/N4KvafPbauw">Help</a></li>
                     </ul>
                 </div>
             </nav>	
@@ -23,17 +32,35 @@
                 <h3>Smart Home Web Client!</h3>
                 <br/>
                 <div class="row">
-                    <div class="input-field col s12 m12 l12 xl12">
-                        <textarea id="textarea_1" class="materialize-textarea" style="height: 150px;" readonly></textarea>
+                    <!-- 
+                    <div class="col l2 s12 m6">
+                    <a id="boton" class="waves-effect waves-light btn">Click!!</a>
                     </div>
-                    <div class="col s4 m4 l2 xl2">
-                        <button class="btn waves-effect waves-light button-view" onclick="SayHello();" name="hello_button">PRESS ME</button>
+                    <div class="col l2 s12 m6">
+                    <a id="btnCerrar" class="waves-effect waves-light btn">Cerrar</a>
+                </div>-->
+                <div class="col l12 s12 m12">
+                    <p id="lista"></p>
+                    <ul id="listaDisp" class="collection" ng-click="onRowClicked(item)"></ul>
+                </div>
+                    <div class="col s4 m4 l4 xl4">
+                        <a class="btn-floating btn-large waves-effect waves-light red" data-target="modal_edit"><i id="button_add"class="material-icons">add</i></a>
+                    </div>
+                    <div class="right-align">
+                        <div class="switch">
+                            <label>
+                            All Off
+                            <input id="switch_all" type="checkbox">
+                            <span class="lever"></span>
+                            All On
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>	
+            </div>
         </main>
 		<!-- Page Footer -->
-        <footer class="page-footer" style="background-color:#124580">
+        <footer class="page-footer colorFondo" >
             <div class="container">
                 <div class="row">
                     <div class="col l6 s6">
@@ -43,7 +70,7 @@
                     <div class="col l6 s6">
                         <h5 class="white-text right-align">Contact</h5>
                         <p class="white-text right-align">
-                            <a class="grey-text text-lighten-3" href="!#">Email | </a>
+                            <a class="grey-text text-lighten-3" href="mail:ijlombardi@gmail.com">Email | </a>
                             <a class="grey-text text-lighten-3" href="!#">Twitter | </a>
                             <a class="grey-text text-lighten-3" href="!#">LinkedIn</a>
                         </p>
@@ -51,8 +78,70 @@
                 </div>
             </div>
         </footer>
+
+
+  <!-- Modal Structure -->
+  <div id="modal_edit" class="modal">
+    <div class="modal-content">
+      <h4>Edit device</h4>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="device_name" type="text" class="validate">
+              <label for="device_name">Name</label>
+            </div>
+          </div>       
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="device_description" type="text" class="materialize-textarea validate"></textarea>
+              <label for="device_description">Description</label>
+            </div>
+          </div>
+          <div class="row modal-form-row">
+            <div class="input-field col s12">
+                <select id="device_type">
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="0">Lightpoint On-Off</option>
+                  <option value="1">Blind Open-Closed Only/option>
+                  <option value="2">Lightpoint Dimmable</option>
+                  <option value="3">Blind with level</option>
+                </select>
+                <label>Materialize Select</label>
+              </div>
+          </div>            
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <a class=" modal-action modal-close waves-effect waves-red btn-flat"id="modal_cancel">Cancel</a>
+        <a class="btn waves-effect waves-light" type="submit" id="modal_submit">Submit</a>
+    </div>
+  </div>
+
+
+    <!-- Modal Structure -->
+    <div id="modal_options" class="modal">
+        <div class="modal-content">
+          <h4>Device options</h4>
+        </div>
+        <div class="modal-footer center-align right scale-transition scale-in">
+            <a class=" modal-action modal-s waves-effect waves-yellow btn-flat"id="modal_update"><i class="material-icons">edit</i>Edit</a>
+            <a class=" modal-action modal-close waves-effect waves-red btn-flat"id="modal_delete"><i class="material-icons">delete</i>Delete</a>
+            <a class=" modal-action modal-close waves-effect waves-green btn-flat"id="modal_back"><i class="material-icons">cancel</i>Cancel</a>
+        </div>
+      </div>
+    </div>
+
+
 		<!--JavaScript at end of body for optimized loading-->
-		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="./static/js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/MyFramework.js"></script>
+
 		<script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/user.js"></script>
+        <script type="text/javascript" src="js/device.js"></script>
+        
     </body>
   </html>
