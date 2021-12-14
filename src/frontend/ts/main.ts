@@ -4,12 +4,11 @@ class Main implements EventListenerObject, HandlerHTTP{
     public listaDis: Array<Device> = [];
     public active_device: number;
     public main(): void {
-        console.log("Se ejecuto el metodo main!!!");
+        //console.log("Se ejecuto el metodo main!!!");
         this.myFramework = new MyFramework();
       
-    }
-    
-    // This function loads devices from esrver into memory
+    }  
+    // This function loads devices from esrver into listaDisp
     public loadDevices(){
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
@@ -41,10 +40,10 @@ class Main implements EventListenerObject, HandlerHTTP{
         }
         xhr.open("GET","http://localhost:8000/devices",true)
         xhr.send();
-        console.log("Ya hice el request!!")
+        //console.log("Ya hice el request!!")
     }
 
-    // This function loads devices to screen
+    // This function loads devices stored in listaDisp to screen
     public loadScreen(){
         let listaDisp = this.myFramework.getElementById("listaDisp");
         let devices_HTML: string;
@@ -374,15 +373,15 @@ class Main implements EventListenerObject, HandlerHTTP{
     }
 
     responseHTTP(status: number, response: string) {  
-        console.log("HTTP in",response);
+        //console.log("HTTP in",response);
     }    
 }
 
+// This functions returns device ID depending on the UI element that created the event
 function get_device_ID(elemento:HTMLInputElement): number{
       if (elemento.id.includes("disp_")){
         return +elemento.id.substring(5);//removes the string "disp_" from HTML element ID
       }
-      
       if (elemento.id.includes("slider_")){
         return +elemento.id.substring(7);//removes the string "slider_" from HTML element ID
       }

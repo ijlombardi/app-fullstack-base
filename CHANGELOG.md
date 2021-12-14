@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 2.2.6
+* Project modification
+    * Modal added with form used to createa new device.
+    * Modal added with options to modify or delete a device.
+    * New UI with one button to add, and an option button for each device.
+    * Added switch to control all devices.
+
+## 2.2.5
+* Project modification
+    * Switches added to each device to control 'Status'.
+    * Slider added to each device to control 'Level'.
+    * UI reacts to device type to show Switch and/or Slider.
+    * Separate methods to loadDevices and loadScreen.
+
+## 2.2.4
+* Project modification
+    * Web interface designed as single page application.
+    * UI implements MaterializeCSS
+    * Added modules Nouislider and material-dialog.
+    * Web page able visualize all devices data and picture.
+
+## 2.2.3
+* Project modification
+    * Framework implemented to use REST API with backend
+    * Device class defined to store data and methods.
+    * Main class defined with an atribute of active array of devices.
+    * Main class implements event handler for UI interaction.
+
+## 2.2.2
+* Project modification
+    * Backend makes usage of MySQL database to store data.
+    * New DB field called 'level' added to store dimmable devices.
+    * SQL dump modified to comply with new DB structure
+    * New field Level added to REST API.
+
+## 2.2.1
+* Project modification
+    * Adds an REST API interface to connect backend with frontend
+    * Implements HTTP methods GET, to give information of one or all devices.
+    * Implements methods POST to update a hole device or just the status
+    * Implements methods PUT, DELETE to create or delete a device.
+
 ## 2.2.0
 
 * Project modification

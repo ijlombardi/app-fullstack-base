@@ -1,11 +1,16 @@
 /*
 
+This class handles all device data.
+
+Methods give to the UI the information about the controls required for each device type.
+
 Suported device types:
 - 0: Lightpoint On-Off
 - 1: Blind Open-Closed Only
 - 2: Lightpoint Dimmable
 - 3: Blind with level
 */
+
 class Device{
 
   public id: number;
@@ -26,6 +31,7 @@ class Device{
     
   }
 
+  // Gives the UI the information if the device needs a switch
   public UI_switch(): boolean{
     if (this.type == 0){ //- 0: Lightpoint On-Off
       return true;
@@ -44,6 +50,7 @@ class Device{
     }
   }
 
+  // Gives the UI the information if the device needs a slider
   public UI_slider(): boolean{
       if (this.type == 0){ //- 0: Lightpoint On-Off
         return false;
@@ -62,7 +69,8 @@ class Device{
       }
   }
 
-
+  // Gives the UI the information if the device needs color picker
+  // Not implemented on current application. Left for future development
   public UI_RGB(): boolean{
       if (this.type == 0){ //- 0: Lightpoint On-Off
         return false;
@@ -81,9 +89,8 @@ class Device{
       }
   }
 
-    
+  // Gives the UI thee location of the image to be shown
   public UI_image(): string{
-    //console.log("Tipo: ",this.type);
       if (this.type == 0){ //- 0: Lightpoint On-Off
         return '"./static/images/lightbulb.png"';
       }

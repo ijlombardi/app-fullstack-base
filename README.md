@@ -160,37 +160,179 @@ En esta sección podés ver los detalles específicos de funcionamiento del cód
 
 Completá los pasos para agregar un dispositivo desde el cliente web.
 
+Una vez abierta la URL de la pagina de inicio de la aplicacion, automaticamente se obitne del servidor la lsita actualizada de dispositivos utilizando la API REST. La informacion se carga en un array de dispositivos en memoria para su futuro uso.
+Al presionar el boton "+" de la UI se abre un formulario para completar la informacion del nuevo dispositivo a crear: Nombre, descripcion y Tipo. El ID se obtien automaticamente del primero disponible. Una vez cargada la informacion, al hacer submit se agrega el dispositivo en la UI y se envia al serivdor para que lo agrege en la BD. En caso de no haber seleccionado un tipo de dispositivo se asigna por default el Tipo 0 correspondiente a una lampara On-Of.
+
 ### Frontend
 
 Completá todos los detalles sobre cómo armaste el frontend, sus interacciones, etc.
 
+El frontend cuenta con 3 clases: Framework, Devices y Main.
+
+-Framework: Esta clase se encarga de implementar todos los metodos HTTP haciendo uso de una interfaz de TypeScript. 
+
+-Devices: Esta clase define la estructura de datos qu tiene cada dispositivo. Tiene su metodo constructor. Tiene definidos todos los tipos de dispositivos disponibles. Tiene metodos para indicar a la UI si cada dispositivo necesita un Switch y/o un Slider para ser controlado.
+Tipos de dispositivos soportados:
+- 0: Lightpoint On-Off
+- 1: Blind Open-Closed Only
+- 2: Lightpoint Dimmable
+- 3: Blind with level
+
+-Main: Esta clase implementa la interfaz de TypeScript Hanler HTTP y Event Listener.  Cuenta con un atributo llamado listaDis que es un array con todos los dispositivos. En el atributo active_device se almacena el ID del dispositivo seleccionado en la UI para editar o eliminar. Tiene 3 metodos que son:
+    -loadDevices: carga en el array listaDis todos los dispositivos del servidor.
+    -loadScreen: carga en pantalla todos los dispositvos del array listaDis.
+    -handleEvent: maneja todos los eventos de la UI.
+
 ### Backend
 
 Completá todos los detalles de funcionamiento sobre el backend, sus interacciones con el cliente web, la base de datos, etc.
+
+El backend implementa una BD MySQL donde alamacena toda la infromacion de los dispositivos. 
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `state` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `level` int(11) NOT NULL
+
+Se comunica con el frontend mediante una API Rest implementada con NodeJS. Pone a disposicion unos endpoints con metodos HTTP para obtener y modificar informacion.
 
 <details><summary><b>Ver los endpoints disponibles</b></summary><br>
 
 Completá todos los endpoints del backend con los metodos disponibles, los headers y body que recibe, lo que devuelve, ejemplos, etc.
 
 1) Devolver el estado de los dispositivos.
+URL: http://localhost:8000/devices/
+Metodo: GET
+Body:```json{
 
-```json
-{
-    "method": "get",
-    "request_headers": "application/json",
-    "request_body": "",
-    "response_code": 200,
-    "request_body": {
-        "devices": [
-            {
-                "id": 1,
-                "status": true,
-                "description": "Kitchen light"
-            }
-        ]
+}``` 
+
+RESPONSE
+```json{
+[
+    {
+        "id": 1,
+        "name": "Lampara 1",
+        "description": "Luz living",
+        "state": 1,
+        "type": 2,
+        "level": 36
     },
-}
-``` 
+    {
+        "id": 8,
+        "name": "sfdsad2",
+        "description": "asfsa2",
+        "state": 0,
+        "type": 2,
+        "level": 0
+    }
+]
+}``` 
+
+2) Devolver el estado de un dispositivo.
+URL: http://localhost:8000/devices/id
+Metodo: GET
+Body:```json{
+
+}``` 
+
+RESPONSE
+```json{
+        "id": 1,
+        "name": "Lampara 1",
+        "description": "Luz living",
+        "state": 1,
+        "type": 2,
+        "level": 36
+}``` 
+
+
+3) Actualiza todos los campos de un device
+URL: http://localhost:8000/devices/
+Metodo: POST
+Body:```json{
+            "id": 1,
+            "name": "Lampara 1",
+            "description": "Luz living",
+            "state": 1,
+            "type": 2,
+            "level": 36
+}``` 
+
+RESPONSE
+```json{
+    "fieldCount":0,
+    "affectedRows":1,
+    "insertId":0,
+    "serverStatus":2,
+    "warningCount":0,
+    "message":"(Rows matched: 1  Changed: 1  Warnings: 0",
+    "protocol41":true,"changedRows":1
+}``` 
+
+
+4) Actualiza solo los campos de estado y level de un device
+URL: http://localhost:8000/devices/id
+Metodo: POST
+Body:```json{
+            "state": 1,
+            "level": 36
+}``` 
+
+RESPONSE
+```json{
+    "fieldCount":0,
+    "affectedRows":1,
+    "insertId":0,
+    "serverStatus":2,
+    "warningCount":0,
+    "message":"(Rows matched: 1  Changed: 1  Warnings: 0",
+    "protocol41":true,"changedRows":1
+}``` 
+
+5) Crea un nuevo dispositivo en la BD
+URL: http://localhost:8000/devices/
+Metodo: PUT
+Body:```json{
+            "id": 1,
+            "name": "Lampara 1",
+            "description": "Luz living",
+            "state": 1,
+            "type": 2,
+            "level": 36
+}``` 
+
+RESPONSE
+```json{
+        "fieldCount":0,
+        "affectedRows":1,
+        "insertId":7,
+        "serverStatus":2,
+        "warningCount":0,
+        "message":"",
+        "protocol41":true,
+        "changedRows":0
+}``` 
+
+6) Elimina un nuevo dispositivo en la BD
+URL: http://localhost:8000/devices/
+Metodo: DELETE
+Body:```json{
+            "id": 1,
+}``` 
+
+RESPONSE
+```json{
+        "fieldCount":0,
+        "affectedRows":1,
+        "insertId":0,
+        "serverStatus":2,
+        "warningCount":0,
+        "message":"",
+        "protocol41":true,
+        "changedRows":0
+}``` 
 
 </details>
 

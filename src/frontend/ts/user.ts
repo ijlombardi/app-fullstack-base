@@ -1,3 +1,6 @@
+// Class not implemente yet.
+//User management left for next development sprint
+
 class User{
   private id: number;
   private name: string;
